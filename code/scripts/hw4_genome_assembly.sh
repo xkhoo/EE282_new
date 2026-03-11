@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #SBATCH --job-name=Genome_Assembly
-#SBATCH --output=/pub/xkhoo/log/genome_assembly.log
+#SBATCH --output=/pub/xkhoo/log/genome_assembly_new.log
 #SBATCH --ntasks=1
 #SBATCH --account=ALLISONS_LAB
 #SBATCH --mem=50gb
@@ -17,10 +17,10 @@ umask g+rwx
 
 # Obtain the reads from JJ's folder
 DATADIR="data/raw"
-cp /pub/jje/ee282/ISO_HiFi_Shukla2025.fasta.gz "${DATADIR}"
+#cp /pub/jje/ee282/ISO_HiFi_Shukla2025.fasta.gz "${DATADIR}" (run this before submitting the script)
 
 READS="${DATADIR}/ISO_HiFi_Shukla2025.fasta.gz"
-OUTDIR="result/homework4/assembly"
+OUTDIR="output/reports/homework4/assembly"
 mkdir -p "${OUTDIR}"
 
 # PART I: Assemble a genome using Pacbio HIFI reads (job submission using sbatch here)

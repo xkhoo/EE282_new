@@ -30,7 +30,7 @@ mkdir -p "$PLOT_OUTDIR"
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/longer_100kb_gc.tsv"
 
-# Prepare input for plotCDF2
+# Prepare input for plotCDF2 with Length and Assembly header
 # Partition 1: all sequences ≤ 100kb
 {
   gawk 'BEGIN {
