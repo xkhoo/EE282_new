@@ -30,18 +30,18 @@ awk -v half="$half" -v total="$total" '
     exit
   }
 }' "${OUTDIR}/assembly.lengths.txt" > "${OUTDIR}/assembly_n50.tsv"
-# Compare to community reference: 25,286,936 bp
+
 
 # 2B. Compare the iso1 assembly to Flybase contig and scaffold assembly
 # Comparison between iso1 and FlyBase contig
 gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contigs.tsv"
 {
   printf "0\tIso1_Assembly\n"
-  bioawk -c fastx '{ print length($seq) "\tIso1_Assembly" }' "$ISO1"
+  bioawk -c fastx '{ print length($seq) "\tIso1_Assembly" }' "$ISO1" | sort -k1,1nr
 
   printf "0\tFlyBase_Contig\n"
-  bioawk -c fastx '{ print length($seq) "\tFlyBase_Contig" }' "$FCONTIG"
-} | sort -k1,1nr >> "${OUTDIR}/Iso1_vs_flybase_contigs.tsv"
+  bioawk -c fastx '{ print length($seq) "\tFlyBase_Contig" }' "$FCONTIG" | sort -k1,1nr
+} >> "${OUTDIR}/Iso1_vs_flybase_contigs.tsv"
 
 ../../informatics_class/bin/plotCDF2 \
   "${OUTDIR}/Iso1_vs_flybase_contigs.tsv" \
@@ -51,11 +51,11 @@ gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contigs.t
 gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_scaffold.tsv"
 {
   printf "0\tIso1_Assembly\n"
-  bioawk -c fastx '{ print length($seq) "\tIso1_Assembly" }' "$ISO1"
+  bioawk -c fastx '{ print length($seq) "\tIso1_Assembly" }' "$ISO1" | sort -k1,1nr
 
   printf "0\tFlyBase_Scaffold\n"
-  bioawk -c fastx '{ print length($seq) "\tFlyBase_Scaffold" }' "$FSCAFF"
-} | sort -k1,1nr >> "${OUTDIR}/Iso1_vs_flybase_scaffold.tsv"
+  bioawk -c fastx '{ print length($seq) "\tFlyBase_Scaffold" }' "$FSCAFF" | sort -k1,1nr
+} >> "${OUTDIR}/Iso1_vs_flybase_scaffold.tsv"
 
 ../../informatics_class/bin/plotCDF2 \
   "${OUTDIR}/Iso1_vs_flybase_scaffold.tsv" \
