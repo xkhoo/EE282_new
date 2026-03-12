@@ -66,14 +66,14 @@ gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contig_sc
 
 {
   printf "0\tIso1_Assembly\n"
-  bioawk -c fastx '{ print length($seq) "\tIso1_Assembly" }' "$ISO1"
+  bioawk -c fastx '{ print length($seq) "\tIso1_Assembly" }' "$ISO1" | sort -k1,1nr
 
   printf "0\tFlyBase_Contig\n"
-  bioawk -c fastx '{ print length($seq) "\tFlyBase_Contig" }' "$FCONTIG"
+  bioawk -c fastx '{ print length($seq) "\tFlyBase_Contig" }' "$FCONTIG" | sort -k1,1nr
 
   printf "0\tFlyBase_Scaffold\n"
-  bioawk -c fastx '{ print length($seq) "\tFlyBase_Scaffold" }' "$FSCAFF"
-} | sort -k1,1nr >> "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv"
+  bioawk -c fastx '{ print length($seq) "\tFlyBase_Scaffold" }' "$FSCAFF" | sort -k1,1nr
+} >> "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv"
 
 ../../informatics_class/bin/plotCDF2 \
   "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv" \
