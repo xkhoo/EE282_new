@@ -9,7 +9,7 @@
 ```bash
   conda activate busco
 ```
-## Summarize partitions of a genome assembly ([hw4_genome_summary.sh](`code/scripts/hw4_genome_summary.sh`))
+## Summarize partitions of a genome assembly ([hw4_genome_summary.sh](code/scripts/hw4_genome_summary.sh))
 ### A. Calculate the following for all sequences ≤ 100kb
 - Command used: 
 ```bash 
@@ -31,9 +31,10 @@ END {
   print "total_sequences\t" nseq
 }' "${FASTA_FILE}" > "${OUTDIR}/shorter_100kb_summary.tsv"
 ```
-- FASTA_FILE=`data/raw/dmel_all_chromosomes.fasta.gz`
-- OUTDIR=`output/reports/homework4`
-- Output from `output/reports/homework4/shorter_100kb_summary.tsv`:
+- `FASTA_FILE=data/raw/dmel_all_chromosomes.fasta.gz`
+- `OUTDIR=output/reports/homework4`
+
+Output from `output/reports/homework4/shorter_100kb_summary.tsv`:
 1. Total number of nucleotides : 6,178,042
 2. Total number of Ns          : 1,863
 3. Total number of sequences   : 1,863
@@ -59,7 +60,8 @@ END {
   print "total_sequences\t" nseq
 }' "${FASTA_FILE}" > "${OUTDIR}/longer_100kb_summary.tsv"
 ```
-- Output from `output/reports/homework4/longer_100kb_summary.tsv`:
+
+Output from `output/reports/homework4/longer_100kb_summary.tsv`:
 1. Total number of nucleotides : 137,547,960
 2. Total number of Ns          : 490,385
 3. Total number of sequences   : 7
@@ -105,8 +107,8 @@ a. Calculate the sequence GC%
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/shorter_100kb_gc.tsv"
 ```
-- FASTA_FILE="data/raw/dmel_all_chromosomes.fasta.gz"
-- OUTDIR="output/reports/homework4"
+- `FASTA_FILE=data/raw/dmel_all_chromosomes.fasta.gz`
+- `OUTDIR=output/reports/homework4`
 
 The table with GC% information for all sequences ≤ 100kb was saved as `output/reports/homework4/shorter_100kb_gc.tsv`.
 
@@ -140,8 +142,8 @@ The sequence GC% distribution plot for all sequences ≤ 100kb was saved as `out
 # PlotCDF2
 ../../informatics_class/bin/plotCDF2 "${OUTDIR}/shorter_100kb_cdf.tsv" "${PLOT_OUTDIR}/shorter_100kb_cdf.png"
 ```
-- OUTDIR="output/reports/homework4"
-- PLOT_OUTDIR="output/figures/homework4"
+- `OUTDIR=output/reports/homework4`
+- `PLOT_OUTDIR=output/figures/homework4`
 
 The cumulative sequence size plot for all sequences ≤ 100kb was saved as `output/figures/homework4/shorter_100kb_cdf.png`
 
@@ -216,22 +218,22 @@ The cumulative sequence size plot for all sequences ≤ 100kb was saved as `outp
 ```bash
 cp /pub/jje/ee282/ISO_HiFi_Shukla2025.fasta.gz data/raw
 ```
-2. Use _hifiasm_ to assemble reads by submitting the script ([hw4_genome_assembly.sh](`code/scripts/hw4_genome_assembly.sh`))
+2. Use _hifiasm_ to assemble reads by submitting the script ([hw4_genome_assembly.sh](code/scripts/hw4_genome_assembly.sh))
 ```bash
 hifiasm -t 16 -o "${OUTDIR}/iso1.dm.asm" "${READS}"
 ```
-- DATADIR="data/raw"
-- READS="${DATADIR}/ISO_HiFi_Shukla2025.fasta.gz"
-- OUTDIR="output/reports/homework4/assembly"
+- `DATADIR=data/raw`
+- `READS=${DATADIR}/ISO_HiFi_Shukla2025.fasta.gz`
+- `OUTDIR=output/reports/homework4/assembly`
 
 A total of 18 files with the prefix `iso1.dm.asm` were saved to `output/reports/homework4/assembly`. The assembly output (`iso1.dm.asm.bp.p_ctg.gfa`) was treated as the main assembly going forward. The `.gfa` output was converted to `.fa` before proceeding to the assessment step using the command:
 ```bash
 gfatools gfa2fa "${OUTDIR}/iso1.dm.asm.bp.p_ctg.gfa" > "${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa"
 ```
-- OUTDIR=`output/reports/homework4/assembly`
+- `OUTDIR=output/reports/homework4/assembly`
 
 ### B. Assembly assessment
-1. N50 assessment [hw4_genome_assembly_assessment.sh](`code/scripts/hw4_genome_assembly_assessment.sh`)
+1. N50 assessment [hw4_genome_assembly_assessment.sh](code/scripts/hw4_genome_assembly_assessment.sh)
 a) Calculate the N50 of the iso-1 assembly 
 Command used:
 ```bash
@@ -251,8 +253,8 @@ awk -v half="$half" -v total="$total" '
   }
 }' "${OUTDIR}/assembly.lengths.txt" > "${OUTDIR}/assembly_n50.tsv"
 ```
-- OUTDIR="output/reports/homework4/assembly"
-- ISO1="${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa"
+- `OUTDIR=output/reports/homework4/assembly`
+- `ISO1=${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa`
 
 Output from `output/reports/homework4/assembly/assembly_n50.tsv`: 21,715,751
 
@@ -260,10 +262,19 @@ b) Compare the output from **1a** to the contig N50 of [_Drosophila_ community r
 - _Drosophila_ community reference N50 = 21,485,538
 - iso1 assembly N50 = 21,715,751
 
-The N50 of the primary contig of iso1 assembly is slightly longer than the _Drosophila_ community reference by 230,213 bp.
+The N50 of the primary contig of iso1 assembly is slightly longer than the _Drosophila_ community reference by **230,213** bp.
 
-2. Compare Iso-1 assembly to both the contig assembly and the scaffold assembly from the _Drosophila melanogaster_ on FlyBase using a contiguity plot [hw4_genome_assembly_assessment.sh](`code/scripts/hw4_genome_assembly_assessment.sh`).
-a) Prepare the plotCDF2 input using the following command:
+2. Compare iso-1 assembly to both the contig assembly and the scaffold assembly from the _Drosophila melanogaster_ on FlyBase using a contiguity plot [hw4_genome_assembly_assessment.sh](`code/scripts/hw4_genome_assembly_assessment.sh`).
+a) Prepare the FlyBase contig assembly (FCONTIG) using the following command:
+```bash  
+zcat "$FSCAFF" \
+| ../../informatics_class/bin/faSplitByN /dev/stdin /dev/stdout 10 \
+> "${OUTDIR}/dmel_contigs_from_scaffolds.fa"
+FCONTIG="${OUTDIR}/dmel_contigs_from_scaffolds.fa"
+```
+- `OUTDIR=output/reports/homework4/assembly`
+
+b) Prepare the plotCDF2 input using the following command:
 ```bash
 gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv"
 
@@ -278,30 +289,22 @@ gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contig_sc
   bioawk -c fastx '{ print length($seq) "\tFlyBase_Scaffold" }' "$FSCAFF" | sort -k1,1nr
 } >> "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv"
 ```
-- ISO1="${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa"
-- FSCAFF="data/raw/dmel_all_chromosomes.fasta.gz"
-- Prepare the FlyBase contig assembly (FCONTIG) using the following command:
-```bash  
-zcat "$FSCAFF" \
-| ../../informatics_class/bin/faSplitByN /dev/stdin /dev/stdout 10 \
-> "${OUTDIR}/dmel_contigs_from_scaffolds.fa"
-FCONTIG="${OUTDIR}/dmel_contigs_from_scaffolds.fa"
-```
-- OUTDIR="output/reports/homework4/assembly"
+- `ISO1=${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa`
+- `FSCAFF=data/raw/dmel_all_chromosomes.fasta.gz`
 
-b) Generate the contiguity plot
+c) Generate the contiguity plot
 ```bash
 ../../informatics_class/bin/plotCDF2 \
   "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv" \
   "${PLOT_OUTDIR}/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png"
 ```
-- OUTDIR="output/reports/homework4/assembly"
+- `PLOT_OUTDIR=output/figures/homework4`
 
-The contiguity plot was saved as `output/reports/homework4/assembly/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png`.
+The contiguity plot was saved as `output/figures/homework4/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png`.
 
 3. Calculate BUSCO scores of both assemblies and compare them.
 a) Activate the BUSCO environment as specified in the **Required environment** section.
-b) BUSCO was run on both the Iso-1 assembly and the FlyBase assembly using the drosophila_odb12 lineage dataset, which contains 9,348 conserved single-copy ortholog groups (n = 9,348). The BUSCO assessment for both assemblies was performed by submitting the script ([hw4_genome_assembly_busco.sh](`code/scripts/hw4_genome_assembly_busco.sh`)):
+b) BUSCO was run on both the iso-1 assembly and the FlyBase assembly using the `drosophila_odb12` lineage dataset, which contains 9,348 conserved single-copy ortholog groups (n = 9,348). The BUSCO assessment for both assemblies was performed by submitting the script ([hw4_genome_assembly_busco.sh](code/scripts/hw4_genome_assembly_busco.sh)):
 ```bash
 # Iso1 assembly
 busco -i "$ISO1" \
@@ -320,18 +323,20 @@ busco -i "data/processed/dmel_all_chromosomes.fa" \
    -o flybase_scaff_busco \
    --out_path "$OUTDIR"
 ```
-- OUTDIR="output/reports/homework4/assembly/busco"
-- ISO1="output/reports/homework4/assembly/iso1.dm.asm.bp.p_ctg.fa"
-- FSCAFF="data/raw/dmel_all_chromosomes.fasta.gz"
+- `OUTDIR=output/reports/homework4/assembly/busco`
+- `ISO1=output/reports/homework4/assembly/iso1.dm.asm.bp.p_ctg.fa`
+- `FSCAFF=data/raw/dmel_all_chromosomes.fasta.gz`
 
 c) BUSCO outputs
 | Assembly | BUSCO dataset | Complete | Single-copy | Duplicated | Fragmented | Missing | Output file |
 |:---|:---|---:|---:|---:|---:|---:|:---:|
-| iso-1 assembly | drosophila_odb12 (n=9,348) | 99.9% (9,337) | 99.6% (9,311) |0.3% (26) | 0.0% (1) | 0.1% (10) | [short_summary.specific.drosophila_odb12.iso1_busco.txt](`output/reports/homework4/assembly/busco/iso1_busco/short_summary.specific.drosophila_odb12.iso1_busco.txt`) |
-| FlyBase scaffold assembly | drosophila_odb12 (n=9,348) | 100% (9,346) | 99.7% (9,316) | 0.3% (30) | 0.0% (0) | 0.0% (2) | [short_summary.specific.drosophila_odb12.flybase_scaff_busco.txt](`output/reports/homework4/assembly/busco/flybase_scaff_busco/short_summary.specific.drosophila_odb12.flybase_scaff_busco.txt`) |
+| iso-1 assembly | drosophila_odb12 (n=9,348) | 99.9% (9,337) | 99.6% (9,311) |0.3% (26) | 0.0% (1) | 0.1% (10) | [short_summary.specific.drosophila_odb12.iso1_busco.txt](output/reports/homework4/assembly/busco/iso1_busco/short_summary.specific.drosophila_odb12.iso1_busco.txt) |
+| FlyBase scaffold assembly | drosophila_odb12 (n=9,348) | 100% (9,346) | 99.7% (9,316) | 0.3% (30) | 0.0% (0) | 0.0% (2) | [short_summary.specific.drosophila_odb12.flybase_scaff_busco.txt](output/reports/homework4/assembly/busco/flybase_scaff_busco/short_summary.specific.drosophila_odb12.flybase_scaff_busco.txt) |
 
-_Values in (parentheses) indicate the number of BUSCO groups in each category_
+_Values in (parentheses) indicate the number of BUSCO groups in each category._
 
 - Of the 9,337 complete BUSCOs in the iso-1 assembly, 147 contained internal stop codons (E= 1.6%).
-- Of the 9,346 complete BUSCOs in the FlyBase scaffold assembly, 147 contained internal stop codon (E=1.6%). 
+- Of the 9,346 complete BUSCOs in the FlyBase scaffold assembly, 147 contained internal stop codons (E=1.6%). 
+
+When assessed with the `drosophila_odb12` lineage dataset, the iso-1 assembly recovered 99.9% of BUSCO groups, while the FlyBase scaffold assembly recovered 100%. This indicates both assemblies were highly complete and they both contained nearly all expected conserved single-copy orthologs. 147 complete BUSCOs in each assembly contained internal stop codons, suggesting that a small fraction of recovered genes may contain prediction artifacts. Both assemblies had high assembly quality, as indicated by their low duplication, fragmentation, and missingness. However, FlyBase scaffold assembly performed slightly better, with no fragmented and fewer missing BUSCOs.    
 
