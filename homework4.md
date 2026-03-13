@@ -142,7 +142,7 @@ The sequence GC% distribution plot for all sequences ≤ 100kb was saved as `out
 } > "${OUTDIR}/shorter_100kb_cdf.tsv"
 
 # PlotCDF2
-../../informatics_class/bin/plotCDF2 "${OUTDIR}/shorter_100kb_cdf.tsv" "${PLOT_OUTDIR}/shorter_100kb_cdf.png"
+/pub/xkhoo/informatics_class/bin/plotCDF2 "${OUTDIR}/shorter_100kb_cdf.tsv" "${PLOT_OUTDIR}/shorter_100kb_cdf.png"
 ```
 - `OUTDIR="output/reports/homework4"`
 - `PLOT_OUTDIR="output/figures/homework4"`
@@ -212,7 +212,7 @@ The sequence GC% distribution plot for all sequences ≤ 100kb was saved as `out
 } > "${OUTDIR}/longer_100kb_cdf.tsv"
 
 # PlotCDF2
-../../informatics_class/bin/plotCDF2 "${OUTDIR}/shorter_100kb_cdf.tsv" "${PLOT_OUTDIR}/shorter_100kb_cdf.png"
+/pub/xkhoo/informatics_class/bin/plotCDF2 "${OUTDIR}/shorter_100kb_cdf.tsv" "${PLOT_OUTDIR}/shorter_100kb_cdf.png"
 ```
 The cumulative sequence size plot for all sequences ≤ 100kb was saved as `output/figures/homework4/longer_100kb_cdf.png`.
 
@@ -272,7 +272,7 @@ The N50 of the primary contig of iso1 assembly is slightly longer than the _Dros
 a) Prepare the FlyBase contig assembly (FCONTIG) using the following command:
 ```bash  
 zcat "$FSCAFF" \
-| ../../informatics_class/bin/faSplitByN /dev/stdin /dev/stdout 10 \
+| /pub/xkhoo/informatics_class/bin/faSplitByN /dev/stdin /dev/stdout 10 \
 > "${OUTDIR}/dmel_contigs_from_scaffolds.fa"
 FCONTIG="${OUTDIR}/dmel_contigs_from_scaffolds.fa"
 ```
@@ -298,7 +298,7 @@ gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contig_sc
 
 c) Generate the contiguity plot
 ```bash
-../../informatics_class/bin/plotCDF2 \
+/pub/xkhoo/informatics_class/bin/plotCDF2 \
   "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv" \
   "${PLOT_OUTDIR}/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png"
 ```
