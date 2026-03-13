@@ -214,11 +214,11 @@ The cumulative sequence size plot for all sequences ≤ 100kb was saved as `outp
 
 ## Genome assembly
 ### A. Assemble iso-1 _Drosophila melanogaster_ using Pacbio HiFi reads
-1. On HPC3, download the reads to the `data/raw` directory using the following command:
+#### 1. On HPC3, download the reads to the `data/raw` directory using the following command:
 ```bash
 cp /pub/jje/ee282/ISO_HiFi_Shukla2025.fasta.gz data/raw
 ```
-2. Use _hifiasm_ to assemble reads by submitting the script ([hw4_genome_assembly.sh](code/scripts/hw4_genome_assembly.sh))
+#### 2. Use _hifiasm_ to assemble reads by submitting the script ([hw4_genome_assembly.sh](code/scripts/hw4_genome_assembly.sh))
 ```bash
 hifiasm -t 16 -o "${OUTDIR}/iso1.dm.asm" "${READS}"
 ```
