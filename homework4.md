@@ -233,8 +233,7 @@ gfatools gfa2fa "${OUTDIR}/iso1.dm.asm.bp.p_ctg.gfa" > "${OUTDIR}/iso1.dm.asm.bp
 - `OUTDIR="output/reports/homework4/assembly"`
 
 ### B. Assembly assessment
-1. N50 assessment [hw4_genome_assembly_assessment.sh](code/scripts/hw4_genome_assembly_assessment.sh)
-
+#### 1. N50 assessment [hw4_genome_assembly_assessment.sh](code/scripts/hw4_genome_assembly_assessment.sh).
 a) Calculate the N50 of the iso-1 assembly 
 Command used:
 ```bash
@@ -265,7 +264,7 @@ b) Compare the output from **1a** to the contig N50 of [_Drosophila_ community r
 
 The N50 of the primary contig of iso1 assembly is slightly longer than the _Drosophila_ community reference by **230,213** bp.
 
-2. Compare iso-1 assembly to both the contig assembly and the scaffold assembly from the _Drosophila melanogaster_ on FlyBase using a contiguity plot [hw4_genome_assembly_assessment.sh](`code/scripts/hw4_genome_assembly_assessment.sh`).
+#### 2. Compare iso-1 assembly to both the contig assembly and the scaffold assembly from the _Drosophila melanogaster_ on FlyBase using a contiguity plot [hw4_genome_assembly_assessment.sh](`code/scripts/hw4_genome_assembly_assessment.sh`).
 a) Prepare the FlyBase contig assembly (FCONTIG) using the following command:
 ```bash  
 zcat "$FSCAFF" \
@@ -303,7 +302,7 @@ c) Generate the contiguity plot
 
 The contiguity plot was saved as `output/figures/homework4/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png`.
 
-3. Calculate BUSCO scores of both assemblies and compare them.
+#### 3. Calculate BUSCO scores of both assemblies and compare them.
 a) Activate the BUSCO environment as specified in the **Required environment** section.
 b) BUSCO was run on both the iso-1 assembly and the FlyBase assembly using the `drosophila_odb12` lineage dataset, which contains 9,348 conserved single-copy ortholog groups (n = 9,348). The BUSCO assessment for both assemblies was performed by submitting the script ([hw4_genome_assembly_busco.sh](code/scripts/hw4_genome_assembly_busco.sh)):
 ```bash
