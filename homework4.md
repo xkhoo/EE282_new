@@ -31,8 +31,8 @@ END {
   print "total_sequences\t" nseq
 }' "${FASTA_FILE}" > "${OUTDIR}/shorter_100kb_summary.tsv"
 ```
-- `FASTA_FILE=data/raw/dmel_all_chromosomes.fasta.gz`
-- `OUTDIR=output/reports/homework4`
+- `FASTA_FILE="data/raw/dmel_all_chromosomes.fasta.gz"`
+- `OUTDIR="output/reports/homework4"`
 
 Output from `output/reports/homework4/shorter_100kb_summary.tsv`:
 1. Total number of nucleotides : 6,178,042
@@ -67,8 +67,8 @@ Output from `output/reports/homework4/longer_100kb_summary.tsv`:
 3. Total number of sequences   : 7
 
 ## Generate plots for partitions of a genome assembly
-- The histograms generated for the sequence length distribution and sequence GC% distribution were done in `code/scripts/hw4_genome_plot_histogram.R`.
-- The estimation of GC content and the cumulative sequence size plots were performed in `code/scripts/hw4_genome_plot_input.sh`. 
+- The histograms generated for the sequence length distribution and sequence GC% distribution were performed in [hw4_genome_plot_histogram.R](code/scripts/hw4_genome_plot_histogram.R).
+- The estimation of GC content and the cumulative sequence size plots were performed in [hw4_genome_plot_input.sh](code/scripts/hw4_genome_plot_input.sh). 
 
 ### A. Plotting all sequences ≤ 100kb
 - Files used in R:
@@ -107,8 +107,8 @@ a. Calculate the sequence GC%
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/shorter_100kb_gc.tsv"
 ```
-- `FASTA_FILE=data/raw/dmel_all_chromosomes.fasta.gz`
-- `OUTDIR=output/reports/homework4`
+- `FASTA_FILE="data/raw/dmel_all_chromosomes.fasta.gz"`
+- `OUTDIR="output/reports/homework4"`
 
 The table with GC% information for all sequences ≤ 100kb was saved as `output/reports/homework4/shorter_100kb_gc.tsv`.
 
@@ -142,8 +142,8 @@ The sequence GC% distribution plot for all sequences ≤ 100kb was saved as `out
 # PlotCDF2
 ../../informatics_class/bin/plotCDF2 "${OUTDIR}/shorter_100kb_cdf.tsv" "${PLOT_OUTDIR}/shorter_100kb_cdf.png"
 ```
-- `OUTDIR=output/reports/homework4`
-- `PLOT_OUTDIR=output/figures/homework4`
+- `OUTDIR="output/reports/homework4"`
+- `PLOT_OUTDIR="output/figures/homework4"`
 
 The cumulative sequence size plot for all sequences ≤ 100kb was saved as `output/figures/homework4/shorter_100kb_cdf.png`
 
@@ -222,15 +222,15 @@ cp /pub/jje/ee282/ISO_HiFi_Shukla2025.fasta.gz data/raw
 ```bash
 hifiasm -t 16 -o "${OUTDIR}/iso1.dm.asm" "${READS}"
 ```
-- `DATADIR=data/raw`
-- `READS=${DATADIR}/ISO_HiFi_Shukla2025.fasta.gz`
-- `OUTDIR=output/reports/homework4/assembly`
+- `DATADIR="data/raw"`
+- `READS="${DATADIR}/ISO_HiFi_Shukla2025.fasta.gz"`
+- `OUTDIR="output/reports/homework4/assembly"`
 
 A total of 18 files with the prefix `iso1.dm.asm` were saved to `output/reports/homework4/assembly`. The assembly output (`iso1.dm.asm.bp.p_ctg.gfa`) was treated as the main assembly going forward. The `.gfa` output was converted to `.fa` before proceeding to the assessment step using the command:
 ```bash
 gfatools gfa2fa "${OUTDIR}/iso1.dm.asm.bp.p_ctg.gfa" > "${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa"
 ```
-- `OUTDIR=output/reports/homework4/assembly`
+- `OUTDIR="output/reports/homework4/assembly"`
 
 ### B. Assembly assessment
 1. N50 assessment [hw4_genome_assembly_assessment.sh](code/scripts/hw4_genome_assembly_assessment.sh)
@@ -253,8 +253,8 @@ awk -v half="$half" -v total="$total" '
   }
 }' "${OUTDIR}/assembly.lengths.txt" > "${OUTDIR}/assembly_n50.tsv"
 ```
-- `OUTDIR=output/reports/homework4/assembly`
-- `ISO1=${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa`
+- `OUTDIR="output/reports/homework4/assembly"`
+- `ISO1="${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa"`
 
 Output from `output/reports/homework4/assembly/assembly_n50.tsv`: 21,715,751
 
@@ -272,7 +272,7 @@ zcat "$FSCAFF" \
 > "${OUTDIR}/dmel_contigs_from_scaffolds.fa"
 FCONTIG="${OUTDIR}/dmel_contigs_from_scaffolds.fa"
 ```
-- `OUTDIR=output/reports/homework4/assembly`
+- `OUTDIR="output/reports/homework4/assembly"`
 
 b) Prepare the plotCDF2 input using the following command:
 ```bash
@@ -289,8 +289,8 @@ gawk 'BEGIN { print "Length\tAssembly" }' > "${OUTDIR}/Iso1_vs_flybase_contig_sc
   bioawk -c fastx '{ print length($seq) "\tFlyBase_Scaffold" }' "$FSCAFF" | sort -k1,1nr
 } >> "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv"
 ```
-- `ISO1=${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa`
-- `FSCAFF=data/raw/dmel_all_chromosomes.fasta.gz`
+- `ISO1="${OUTDIR}/iso1.dm.asm.bp.p_ctg.fa"`
+- `FSCAFF="data/raw/dmel_all_chromosomes.fasta.gz"`
 
 c) Generate the contiguity plot
 ```bash
@@ -298,7 +298,7 @@ c) Generate the contiguity plot
   "${OUTDIR}/Iso1_vs_flybase_contig_scaffold.tsv" \
   "${PLOT_OUTDIR}/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png"
 ```
-- `PLOT_OUTDIR=output/figures/homework4`
+- `PLOT_OUTDIR="output/figures/homework4"`
 
 The contiguity plot was saved as `output/figures/homework4/Iso1_vs_flybase_contig_scaffold_contiguity_plot.png`.
 
@@ -323,9 +323,9 @@ busco -i "data/processed/dmel_all_chromosomes.fa" \
    -o flybase_scaff_busco \
    --out_path "$OUTDIR"
 ```
-- `OUTDIR=output/reports/homework4/assembly/busco`
-- `ISO1=output/reports/homework4/assembly/iso1.dm.asm.bp.p_ctg.fa`
-- `FSCAFF=data/raw/dmel_all_chromosomes.fasta.gz`
+- `OUTDIR="output/reports/homework4/assembly/busco"`
+- `ISO1="output/reports/homework4/assembly/iso1.dm.asm.bp.p_ctg.fa"`
+- `FSCAFF="data/raw/dmel_all_chromosomes.fasta.gz"`
 
 c) BUSCO outputs
 | Assembly | BUSCO dataset | Complete | Single-copy | Duplicated | Fragmented | Missing | Output file |
@@ -338,5 +338,54 @@ _Values in (parentheses) indicate the number of BUSCO groups in each category._
 - Of the 9,337 complete BUSCOs in the iso-1 assembly, 147 contained internal stop codons (E= 1.6%).
 - Of the 9,346 complete BUSCOs in the FlyBase scaffold assembly, 147 contained internal stop codons (E=1.6%). 
 
-When assessed with the `drosophila_odb12` lineage dataset, the iso-1 assembly recovered 99.9% of BUSCO groups, while the FlyBase scaffold assembly recovered 100%. This indicates both assemblies were highly complete and they both contained nearly all expected conserved single-copy orthologs. 147 complete BUSCOs in each assembly contained internal stop codons, suggesting that a small fraction of recovered genes may contain prediction artifacts. Both assemblies had high assembly quality, as indicated by their low duplication, fragmentation, and missingness. However, FlyBase scaffold assembly performed slightly better, with no fragmented and fewer missing BUSCOs.    
+When assessed with the `drosophila_odb12` lineage dataset, the iso-1 assembly recovered 99.9% of BUSCO groups, while the FlyBase scaffold assembly recovered 100%. This indicates both assemblies were highly complete and they both contained nearly all expected conserved single-copy orthologs. 147 complete BUSCOs in each assembly contained internal stop codons, suggesting that a small fraction of recovered genes may contain prediction artifacts. Both assemblies had high assembly quality, as indicated by their low duplication, fragmentation, and missingness. However, FlyBase scaffold assembly performed slightly better, with no fragmented and fewer missing BUSCOs. 
 
+## Extra Credit: Compare the iso-1 assembly to the contig assembly from _Drosophila melanogaster_ on FlyBase using a dotplot constructed with **MUMmer** ([hw4_extra_credit.sh](code/scripts/hw4_extra_credit.sh))
+a) Align the iso-1 assembly to the FlyBase contig assembly using `nucmer` with 4 threads and save the alignments in a delta file
+```bash
+nucmer --delta="${OUTDIR}/iso1_vs_flybase_contig.delta" \
+       -t 4 \
+       "$FCONTIG" \
+       "$ISO1"
+```
+- `OUTDIR="output/reports/homework4/extra_credit"`
+- `FCONTIG="output/reports/homework4/assembly/dmel_contigs_from_scaffolds.fa"`
+- `ISO1="output/reports/homework4/assembly/iso1.dm.asm.bp.p_ctg.fa"`
+
+b) The delta file produced by `nucmer` stores the pairwise alignment results between the two assemblies in a custom format, including the names of matching sequences, alignment length, numbers of errors, and positions of indels (Marçais et al. 2018). The delta file was then filtered with:
+
+- `delta-filter -1` to retain only the best one-to-one alignments, so that each region of the reference and query was mapped uniquely, while still allowing rearrangements such as inversions or translocations. The result was saved as `iso1_vs_flybase_contig.1delta`
+```bash
+delta-filter -1 "${OUTDIR}/iso1_vs_flybase_contig.delta" > "${OUTDIR}/iso1_vs_flybase_contig.1delta"
+```
+- `delta-filter -m` to retain many-to-many alignments, allowing regions in the reference to align to multiple regions in the query and vice versa, while still allowing rearrangements. The result was saved as `iso1_vs_flybase_contig.many.delta`
+```bash
+delta-filter -m "${OUTDIR}/iso1_vs_flybase_contig.delta" > "${OUTDIR}/iso1_vs_flybase_contig.many.delta"
+```
+
+c) The filtered delta files were then visualized using `mummerplot` to compare the alignment patterns between the iso-1 assembly and the FlyBase contig assembly. The `iso1_vs_flybase_contig.1delta` file was plotted to show the best one-to-one alignments, whereas `iso1_vs_flybase_contig.many.delta` was plotted to show the many-to-many alignments.
+```bash
+# 1-to-1 best alignment plot
+mummerplot -t png \
+  --layout \
+  -R "$FCONTIG" \
+  -Q "$ISO1" \
+  -title "Comparison between iso-1 strain and FlyBase contig assembly (best one-to-one alignments)" \
+  -p "${PLOT_OUTDIR}/iso1_vs_flybase_contig_best" \
+  "${OUTDIR}/iso1_vs_flybase_contig.1delta"
+
+# many-to-many alignment plot
+mummerplot -t png \
+  --layout \
+  -R "$FCONTIG" \
+  -Q "$ISO1" \
+  -title "Comparison between iso-1 strain and FlyBase contig assembly (many-to-many alignments)" \
+  -p "${PLOT_OUTDIR}/iso1_vs_flybase_contig_many" \
+  "${OUTDIR}/iso1_vs_flybase_contig.many.delta"
+```
+- `PLOT_OUTDIR="output/figures/homework4/extra_credit"`
+
+The final dotplots showing the best one-to-one alignments and the many-to-many alignments between the iso-1 assembly and the FlyBase contig assembly were saved as `iso1_vs_flybase_contig_best.png` and `iso1_vs_flybase_contig_many.png`, respectively.
+
+## References
+Marçais G, Delcher AL, Phillippy AM, Coston R, Salzberg SL, Zimin A. 2018. MUMmer4: A fast and versatile genome alignment system. PLoS Comput Biol 14: e1005944.

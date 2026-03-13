@@ -5,7 +5,7 @@
 #SBATCH --account=ecoevo282_class
 #SBATCH --mem=50gb
 #SBATCH --cpus-per-task=16
-#SBATCH --time=01:00:00
+#SBATCH --time=00:20:00
 #SBATCH --mail-user=xkhoo@uci.edu
 #SBATCH --mail-type=BEGIN,FAIL,END
 
