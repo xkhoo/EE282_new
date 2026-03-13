@@ -340,7 +340,7 @@ _Values in (parentheses) indicate the number of BUSCO groups in each category._
 
 When assessed with the `drosophila_odb12` lineage dataset, the iso-1 assembly recovered 99.9% of BUSCO groups, while the FlyBase scaffold assembly recovered 100%. This indicates both assemblies were highly complete and they both contained nearly all expected conserved single-copy orthologs. 147 complete BUSCOs in each assembly contained internal stop codons, suggesting that a small fraction of recovered genes may contain prediction artifacts. Both assemblies had high assembly quality, as indicated by their low duplication, fragmentation, and missingness. However, FlyBase scaffold assembly performed slightly better, with no fragmented and fewer missing BUSCOs. 
 
-## Extra Credit: Compare the iso-1 assembly to the contig assembly from _Drosophila melanogaster_ on FlyBase using a dotplot constructed with **MUMmer** ([hw4_extra_credit.sh](code/scripts/hw4_extra_credit.sh))
+## Extra Credit: Compare the iso-1 assembly to the contig assembly from _Drosophila melanogaster_ on FlyBase using a dotplot constructed with _MUMmer_ ([hw4_extra_credit.sh](code/scripts/hw4_extra_credit.sh))
 a) Align the iso-1 assembly to the FlyBase contig assembly using `nucmer` with 4 threads and save the alignments in a delta file
 ```bash
 nucmer --delta="${OUTDIR}/iso1_vs_flybase_contig.delta" \
@@ -385,7 +385,7 @@ mummerplot -t png \
 ```
 - `PLOT_OUTDIR="output/figures/homework4/extra_credit"`
 
-The final dotplots showing the best one-to-one alignments and the many-to-many alignments between the iso-1 assembly and the FlyBase contig assembly were saved as `iso1_vs_flybase_contig_best.png` and `iso1_vs_flybase_contig_many.png`, respectively.
+The final dotplots showing the best one-to-one alignments and the many-to-many alignments between the iso-1 assembly and the FlyBase contig assembly were saved as `iso1_vs_flybase_contig_best.png` and `iso1_vs_flybase_contig_many.png`, respectively. The `iso1_vs_flybase_contig_best.png` dotplot shows that the iso-1 assembly aligned strongly with the FlyBase contig assembly, as most alignments fell along positive diagonal blocks. The fragmented pattern of these alignment blocks was consistent with the contig-level nature of the FlyBase assembly. The `iso1_vs_flybase_contig_many.png` dotplot shows the same overall positive diagonal structure but it contained more off-diagonal dots and dense clusters of alignments. These extra alignments reflected the retention of multiple valid matches in the many-to-many filtering step and likely arose from repetitive, duplicated, or fragmented regions.     
 
 ## References
 Marçais G, Delcher AL, Phillippy AM, Coston R, Salzberg SL, Zimin A. 2018. MUMmer4: A fast and versatile genome alignment system. PLoS Comput Biol 14: e1005944.
