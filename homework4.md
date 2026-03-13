@@ -79,12 +79,13 @@ long  <- read.delim("output/reports/homework4/longer_100kb_gc.tsv", sep = "\t", 
 #### 1. Sequence length distribution
 - Command used: 
 ```R
+# shorter than 100 kb length histogram
 p1 <- ggplot(short, aes(x = length)) +
-  geom_histogram(bins = 40) +
+  geom_histogram(bins = 30, fill = "grey", color = "black") +
   scale_x_log10() +
   labs(
-    title = "Sequence length distribution (<=100 kb)",
-    x = "Sequence length (log10 scale)",
+    title = "Distribution of sequence lengths for all sequences ≤ 100 kb",
+    x = "Sequence length (bp, log10 scale)",
     y = "Count"
   ) +
   theme_bw(base_size = 16)
@@ -102,7 +103,7 @@ a. Calculate the sequence GC%
   {
     len = length($seq)
     if (len <= 100000) {
-      print $name "\t" len "\t" gc($seq)
+      print $name "\t" len "\t" 100*gc($seq)
     }
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/shorter_100kb_gc.tsv"
@@ -114,11 +115,12 @@ The table with GC% information for all sequences ≤ 100kb was saved as `output/
 
 b. Plot the GC% distribution in R:
 ```R
+# shorter than 100 kb GC histogram
 p2 <- ggplot(short, aes(x = gc)) +
-  geom_histogram(bins = 30) +
+  geom_histogram(bins = 30, fill = "grey", color = "black") +
   labs(
-    title = "GC distribution (<=100 kb)",
-    x = "GC",
+    title = "Distribution of GC% for all sequences ≤ 100 kb",
+    x = "GC%",
     y = "Count"
   ) +
   theme_bw(base_size = 16)
@@ -151,11 +153,12 @@ The cumulative sequence size plot for all sequences ≤ 100kb was saved as `outp
 #### 1. Sequence length distribution
 - Command used:
 ```R
+# longer than 100 kb length histogram
 p3 <- ggplot(long, aes(x = length)) +
-  geom_histogram(bins = 30) +
+  geom_histogram(bins = 30, fill = "grey", color = "black") +
   scale_x_log10() +
   labs(
-    title = "Sequence length distribution (>100 kb)",
+    title = "Distribution of sequence length for all sequences > 100 kb",
     x = "Sequence length (log10 scale)",
     y = "Count"
   )+
@@ -174,7 +177,7 @@ a. Calculate the sequence GC%
   {
     len = length($seq)
     if (len > 100000) {
-      print $name "\t" len "\t" gc($seq)
+      print $name "\t" len "\t" 100*gc($seq)
     }
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/longer_100kb_gc.tsv"
@@ -183,11 +186,12 @@ The table with GC% information for all sequences > 100kb was saved as `output/re
 
 b. Plot the GC% distribution in R:
 ```R
+# longer than 100 kb GC histogram
 p4 <- ggplot(long, aes(x = gc)) +
-  geom_histogram(bins = 30) +
+  geom_histogram(bins = 30, fill = "grey", color = "black") +
   labs(
-    title = "GC distribution (>100 kb)",
-    x = "GC",
+    title = "Distribution of GC% for all sequences > 100 kb",
+    x = "GC%",
     y = "Count"
   ) +
   theme_bw(base_size = 16)
