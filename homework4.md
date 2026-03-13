@@ -234,6 +234,7 @@ gfatools gfa2fa "${OUTDIR}/iso1.dm.asm.bp.p_ctg.gfa" > "${OUTDIR}/iso1.dm.asm.bp
 
 ### B. Assembly assessment
 1. N50 assessment [hw4_genome_assembly_assessment.sh](code/scripts/hw4_genome_assembly_assessment.sh)
+
 a) Calculate the N50 of the iso-1 assembly 
 Command used:
 ```bash
