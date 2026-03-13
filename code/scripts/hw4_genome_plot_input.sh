@@ -12,7 +12,7 @@ mkdir -p "$PLOT_OUTDIR"
   {
     len = length($seq)
     if (len <= 100000) {
-      print $name "\t" len "\t" gc($seq)
+      print $name "\t" len "\t" 100*gc($seq)
     }
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/shorter_100kb_gc.tsv"
@@ -25,7 +25,7 @@ mkdir -p "$PLOT_OUTDIR"
   {
     len = length($seq)
     if (len > 100000) {
-      print $name "\t" len "\t" gc($seq)
+      print $name "\t" len "\t" 100*gc($seq)
     }
   }' "${FASTA_FILE}"
 } > "${OUTDIR}/longer_100kb_gc.tsv"
