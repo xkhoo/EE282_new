@@ -1,0 +1,11 @@
+"trait","rho","median","max"
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.monosaccharide.transport",0.477678566534588,2,22
+"Resource.Acquisition.Substrate.uptake.biopolymer.transport",0.329787915550998,2,3
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.oligosaccharide.transport.disaccharide.transport",0.27309390780791,0,14
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.carbohydrate.acid.transport",0.250736947737989,0,7
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.oligosaccharide.transport.tetrasaccharide.transport",0.146489543808467,0,1
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.amino.sugar.transport",0.143722667234836,0,4
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.oligosaccharide.transport",0.142043108602325,0,3
+"Resource.Acquisition.Substrate.uptake.aromatic.acid.transport",0.131587270873732,0,1
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.carbohydrate.phosphate.transport",0.0561942199241629,0,1
+"Resource.Acquisition.Substrate.uptake.carbohydrate.transport.carbohydrate.derivative.transport.glycoside.transport",0.0517866773588816,0,6
