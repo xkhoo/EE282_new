@@ -55,16 +55,18 @@ This project partially covered the full range of exploratory analyses I initiall
 ## Code and Data Availability
 All code used in this project is available in the `final_project` branch of this repository. The main scripts used for metadata preprocessing, dereplication, relative abundance estimation, trait matrix construction, PCA, and environmental predictor extraction are stored in `code/scripts/`. Large raw genome collections and raster files are not redistributed in the repository because of file size and access constraints.
 
-## Scripts Used
+## Main Scripts
 **1.** [download_example_genomes.sh](code/scripts/download_example_genomes.sh): Download example bacterial genomes for readers to test run the microtrait pipeline. The second part of the script can generate the id list of rhizosphere MAGs obtained from JGI.
 
-**2.** [prepare_predictors.R](code/scripts/prepare_predictors.R): Explain the ways of retrieving environmental raster products online. It includes processing, resampling, and reprojecting steps. Use dRep outputs and MAG average coverage values to calculate representative-genome and cluster-level relative abundance tables.
+**2.** [prepare_predictors.R](code/scripts/prepare_predictors.R): Explain the ways of retrieving environmental raster products online. It includes processing, resampling, and reprojecting steps.
 
-**3.** [predictor_data_extraction_RA.R](code/scripts/predictor_data_extraction_RA.R): Preprocess metadata, quality control, remove records lacking latitude/longitude, and write cleaned metadata tables. The predictor extraction parts were done locally.
+**3.** [predictor_data_extraction_RA.R](code/scripts/predictor_data_extraction_RA.R): Preprocess metadata, quality control, remove records lacking latitude/longitude, and write cleaned metadata tables. Use dRep outputs and MAG average coverage values to calculate representative-genome and cluster-level relative abundance tables. The predictor extraction parts were done locally.
 
-**4.** [microtrait.example.R](code/scripts/microtrait.example.R): Readers can run the first part to test the microtrait pipeline by submitting it through [run_microtrait.sh](code/scripts/microtrait.example.R). The second part of this script explains the actual step for running microtrait on my project dataset. 
+**4.** [run_drep_genome_info.sh](code/scripts/run_drep_genome_info.sh): Run `dRep` on the medium-quality MAGs to assign secondary clusters and identify representative winner genomes.
 
-**5.** [prepare_ML_input_matrices.R](code/scripts/prepare_ML_input_matrices.R): Process microTrait trait outputs, construct raw and genome-size-residualized MAG-level trait matrices, aggregate them into sample-level CWM matrices, and perform PCA on raw and residualized sample-level CWM matrices. This script writes ordination plots, variance summaries, and PCA-ready matrices.
+**5.** [microtrait.example.R](code/scripts/microtrait.example.R): Readers can run the first part to test the microtrait pipeline by submitting it through [run_microtrait.sh](code/scripts/microtrait.example.R). The second part of this script explains the actual step for running microtrait on my project dataset. 
+
+**6.** [prepare_ML_input_matrices.R](code/scripts/prepare_ML_input_matrices.R): Process microTrait trait outputs, construct raw and genome-size-residualized MAG-level trait matrices, aggregate them into sample-level CWM matrices, and perform PCA on raw and residualized sample-level CWM matrices. This script writes ordination plots, variance summaries, and PCA-ready matrices.
 
 ## References
 Chen I-MA, Chu K, Palaniappan K, Ratner A, Huang J, Huntemann M, Hajek P, Ritter Stephan J, Webb C, Wu D et al. 2022. The IMG/M data management and analysis system v.7: content updates and new features. Nucleic Acids Research 51: D723-D732.
