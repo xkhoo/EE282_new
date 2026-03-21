@@ -40,7 +40,7 @@ Several count-like microTrait traits showed moderate positive correlations with 
 ![PCA of the genome-size-residualized sample-level community-weighted mean (CWM) trait matrix](output/figures/final_project/pca_resid_pc1_pc2_landcover.png)
 **Figure 4.** PCA of the genome-size-residualized sample-level community-weighted mean (CWM) trait matrix. Samples are plotted by PC1 and PC2, with points colored by land-cover class.
 
-![Variance explained by principal components for the raw and genome-size-residualized sample-level CWM trait matrices](output/figures/pca_variance_barline.png)
+![Variance explained by principal components for the raw and genome-size-residualized sample-level CWM trait matrices](output/figures/final_project/pca_variance_barline.png)
 **Figure 5.** Variance explained by principal components for the raw and genome-size-residualized sample-level CWM trait matrices. Bars show the proportion of variance explained by each principal component, and lines show cumulative variance explained.
 
 ## Discussion
