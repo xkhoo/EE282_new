@@ -1,0 +1,61 @@
+# Integrating Metagenome-Assembled Genome (MAG) Functional Annotations and Environmental Metadata for Downstream Machine Learning Analysis
+## Introduction
+Microbial communities are known to influence ecosystem functioning and contribute to the natural carbon pool across the Earth system. For instance, soil microbes contribute to soil carbon pool by driving the transformation of plant litter into microbial biomass, mediating the enzymatic breakdown of complex polymers, and stabilizing carbon (Liang et al. 2017). Despite this, many conventional Earth Systems Models (ESMs) have often applied oversimplified parameterizations (Zhuang et al. 2004; Riley et al. 2011), failing to capture the complexity of interactions between microbes and changing environments. ESMs that consider microbial aspects usually adopt parameter values obtained from lab-cultivated microorganisms, which may differ from those found in a specific location (Sulman et al. 2018). To address this limitation, the functional potential seen in complex living systems can be more accurately represented using microbial trait information derived from increasingly available meta-omics data, including metagenomics. Integrated with new machine learning (ML) methods, these high-dimensional data can support ESM development by revealing spatiotemporal patterns and quantifying relationships between environmental drivers and carbon-loss variables. Nevertheless, converting raw genomic annotations into a standardized dataset suitable for trait–environment inference remains a major practical challenge as it requires careful quality control, consistent trait encoding, normalization, and robust validation of trait sparsity and co-occurrence patterns. To enable downstream predictive work, my current project will build an end-to-end bioinformatics pipeline that harmonizes metagenome-assembled genome (MAG) functional traits with environmental predictors. The goal of this project is not to train a predictive model, but rather to generate a clean “ML-ready” feature matrix along with exploratory diagnostics necessary to demonstrate that the matrix is both biologically interpretable and technically suitable for downstream analysis.
+
+## Data and Methods
+I will obtain publicly available MAGs and their associated metadata such as geographical coordinates and genome information from the Joint Genome Institute Integrated Microbial Genomes & Microbiomes (JGI IMG/M), which provides genome-resolved metagenomic resources together with sample-level contextual information such as coordinates and assembly statistics (Chen et al. 2023). My initial dataset will include environmental MAGs with associated geographic metadata so that trait information can later be linked to climate, soil, and vegetation predictors.
+
+### MAG filtering and dereplication
+Because functional inference from MAGs depends strongly on assembly quality, I will first apply explicit quality-control filters based on genome completeness and contamination. These metrics are standard criteria for evaluating microbial genomes and MAGs because incompleteness reduces trait recovery and contamination can inflate apparent gene content (Parks et al. 2015). Following widely used MIMAG-style conventions, I will retain medium-quality or better MAGs, using completeness and contamination thresholds recorded in the metadata and excluding lower-quality bins that are more likely to distort downstream functional annotation (Bowers et al. 2017). I am planning to use a threshold near at least 50-70% completeness and at most 5-10% contamination for MAG filtering. After quality control, I will dereplicate genomes to reduce redundancy among highly similar MAGs. Dereplication is necessary because large MAG collections often contain multiple nearly identical genomes recovered from related samples, and leaving all of them in the dataset can bias trait prevalence summaries and downstream abundance-weighted analyses (Olm et al. 2017). I will use dRep, which clusters genomes based on whole-genome similarity and selects representative genomes while preserving cluster membership information for downstream abundance calculations (Olm et al. 2017).
+
+### Relative abundance estimation
+To represent the contribution of genomes within communities, I will calculate relative abundance using coverage information associated with MAGs in the IMG/M metadata. Specifically, I will aggregate coverage values across MAGs belonging to the same dereplication cluster within each metagenomic sample, and then normalize by the total summed coverage within that sample to estimate cluster-level relative abundance. In parallel, I will calculate a representative-genome-only version in which the selected dRep representative stands in for each cluster. Comparing these two approaches will let me evaluate how dereplication choices change the abundance-weighted trait matrix. This comparison is biologically important because trait summaries can shift if abundant lineages are overrepresented by redundant genomes or, conversely, if representative-only approaches oversimplify within-cluster variation.
+
+### Functional trait annotation
+Filtered MAGs will be annotated for functional traits using microTrait and dbCAN3. microTrait provides a trait-based framework that summarizes microbial genomes into biologically interpretable trait categories, while dbCAN3 supports automated annotation of carbohydrate-active enzymes and related substrate-processing functions (Karaoz and Brodie 2022; Zheng et al. 2023). These tools provide a tractable way to convert genome content into standardized trait variables, supporting my long-term interest in traits related to decomposition and carbon cyling. Trait annotations will then be encoded into a matrix suitable for exploratory analysis and later machine learning.
+
+### Environmental variable extraction
+Environmental predictors will be extracted from global gridded datasets using the geographic coordinates associated with each MAG or metagenomic sample. Candidate climate predictors include bioclimatic variables from WorldClim, which provides widely used global climate surfaces at approximately 1-km resolution (Fick and Hijmans 2017). I will obtain vegetation or productivity-related predictors, such as net primary production (NPP) and enhanced vegetation index (EVI) from MODIS (Didan 2015; Running et al. 2015). I will obtain soil variables, such as soil pH, soil clay content, and organic carbon stock from SoilGrids (Poggio et al. 2021). Before extraction, I will reproject and resample these raster products which differ in spatial resolution and extent to a common grid so that environmental values are comparable across predictor layers.
+
+## Questions
+### 1. How do normalization choices affect trait distributions and cross-site comparisons?
+Raw gene counts, genome-size-normalized values, and community-weighted summaries can each emphasize different aspects of microbial functional structure. This is biologically important because some traits scale with genome size or general metabolic breadth, whereas others may better reflect ecological investment in specific functions. Evaluating how these transformations change trait distributions will help determine whether observed patterns represent ecological contrasts among sites or simply technical scaling effects driven by genome architecture or uneven redundancy.
+
+### 2. Do traits co-vary in interpretable ways that suggest broader ecological strategies or guild-like structure?
+Traits involved in resource acquisition, stress tolerance, or specific modes of substrate use may cluster together because they reflect coordinated ecological strategies rather than isolated functions. I will explore this possibility using trait-correlation heatmaps and principal component analysis (PCA), which can summarize dominant axes of covariance in multivariate datasets (Jolliffe and Cadima 2016). The biological motivation is to ask whether genome-derived traits organize into broader functional packages that may later be more predictable, and more ecologically meaningful, than single traits alone.
+
+## Feasibility
+The proposed project is feasible within the scope of EE282 because the necessary MAG and environmental data are publicly available through the JGI IMG/M database and established global datasets. The proposed pipeline makes use of common data processing techniques taught in the course as well as open-source bioinformatics tools. The project's emphasis on exploratory data analysis and visualization fits in nicely with the deliverables and course themes. I can finish the work and generate reproducible results because the scope is suitable for the deadline and I am familiar with Unix, R, and simple python scripting.
+
+A few limitations are likely. First, genome incompleteness may lead to underestimation of some traits, particularly for partial MAGs, so I will explicitly document filtering thresholds and interpret absence calls cautiously. Second, annotation coverage will not be perfect because no single database captures all microbial functions. Thus, using both microTrait and dbCAN3 should improve coverage for the subset of traits most relevant to decomposition and carbon cycling. Finally, global gridded environmental products differ in resolution and uncertainty, so harmonizing them to a common projection and scale will be essential before any downstream comparisons are made.
+
+## References
+Bowers RM, Kyrpides NC, Stepanauskas R, Harmon-Smith M, Doud D, Reddy TBK, Schulz F, Jarett J, Rivers AR, Eloe-Fadrosh EA, et al. 2017. Minimum information about a single amplified genome (MISAG) and a metagenome-assembled genome (MIMAG) of bacteria and archaea. Nat Biotechnol 35: 725-731.
+
+Chen I-MA, Chu K, Palaniappan K, Ratner A, Huang J, Huntemann M, Hajek P, Ritter Stephan J, Webb C, Wu D et al. 2022. The IMG/M data management and analysis system v.7: content updates and new features. Nucleic Acids Research 51: D723-D732.
+
+Didan K. 2015. MOD13A3 MODIS/Terra vegetation indices monthly L3 global 1km SIN grid V006 [data set]. NASA Land Processes Distributed Active Archive Center.
+
+Fick SE, Hijmans RJ. 2017. WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. Int J Climatol 37: 4302-4315.
+
+Jolliffe IT, Cadima J. 2016. Principal component analysis: a review and recent developments. Philos Trans A Math Phys Eng Sci 374: 20150202.
+
+Karaoz U, Brodie EL. 2022. microTrait: A Toolset for a Trait-Based Representation of Microbial Genomes. Frontiers in Bioinformatics Volume 2 - 2022.
+
+Liang C, Schimel JP, Jastrow JD. 2017. The importance of anabolism in microbial control over soil carbon storage. Nature Microbiology 2: 17105.
+
+Parks DH, Imelfort M, Skennerton CT, Hugenholtz P, Tyson GW. 2015. CheckM: assessing the quality of microbial genomes recovered from isolates, single cells, and metagenomes. Genome Res 25: 1043-1055.
+
+Poggio L, de Sousa LM, Batjes NH, Heuvelink GBM, Kempen B, Ribeiro E, Rossiter D. 2021. SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL 7: 217–240.
+
+Riley W, Subin Z, Lawrence D, Swenson S, Torn M, Meng L, Mahowald N, Hess P. 2011. Barriers to predicting changes in global terrestrial methane fluxes: analyses using CLM4Me, a methane biogeochemistry model integrated in CESM. Biogeosciences 8: 1925-1953.
+
+Running S, Mu Q, Zhao M. 2015. MOD17A3H MODIS/Terra net primary production yearly L4 global 500m SIN grid V006 [data set]. NASA Land Processes Distributed Active Archive Center.
+
+Sulman BN, Moore JA, Abramoff R, Averill C, Kivlin S, Georgiou K, Sridhar B, Hartman MD, Wang G, Wieder WR. 2018. Multiple models and experiments underscore large uncertainty in soil carbon dynamics. Biogeochemistry 141: 109-123.
+
+Zheng J, Ge Q, Yan Y, Zhang X, Huang L, Yin Y. 2023. dbCAN3: automated carbohydrate-active enzyme and substrate annotation. Nucleic Acids Research 51: W115-W121.
+
+Zhuang Q, Melillo JM, Kicklighter DW, Prinn RG, McGuire AD, Steudler PA, Felzer BS, Hu S. 2004. Methane fluxes between terrestrial ecosystems and the atmosphere at northern high latitudes during the past century: A retrospective analysis with a process-based biogeochemistry model. Global Biogeochemical Cycles 18.
+
+
