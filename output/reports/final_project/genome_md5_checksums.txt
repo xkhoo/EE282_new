@@ -1,0 +1,5 @@
+52a46bceb008af0959a8ee14210e33d2  data/raw/final_project_example_genomes/GCF_000092045.1_ASM9204v1_genomic.fna.gz
+7b0b99348372bf8fb23dcf0b969c4317  data/raw/final_project_example_genomes/GCF_000412675.1_ASM41267v1_genomic.fna.gz
+57ee1de851f703efe1235d7ccc104315  data/raw/final_project_example_genomes/GCF_000960995.1_ASM96099v1_genomic.fna.gz
+3208329bf71e58c507a520e8ad0902b0  data/raw/final_project_example_genomes/GCF_018343775.1_ASM1834377v1_genomic.fna.gz
+f9f934151d69c6760db91e1bb6695be8  data/raw/final_project_example_genomes/GCF_024296925.1_ASM2429692v1_genomic.fna.gz
